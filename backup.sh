@@ -15,7 +15,7 @@ DATE=$(date +%Y%m%d-%H%M%S)
 BACKUP_NAME="coolify-volumes-backup-$DATE.tar.gz"
 
 tar -czf - -C /data volumes \
-| rclone rcat "s3:${S3_BUCKET}/${BACKUP_NAME}" \
+| rclone rcat ":s3:${S3_BUCKET}/${BACKUP_NAME}" \
     --s3-provider Cloudflare \
     --s3-endpoint "${S3_ENDPOINT}" \
     --s3-access-key-id "${S3_ACCESS_KEY_ID}" \
@@ -24,7 +24,7 @@ tar -czf - -C /data volumes \
     --s3-force-path-style
 
 # Retention
-rclone delete "s3:${S3_BUCKET}" \
+rclone delete ":s3:${S3_BUCKET}" \
     --s3-provider Cloudflare \
     --s3-endpoint "${S3_ENDPOINT}" \
     --s3-access-key-id "${S3_ACCESS_KEY_ID}" \
